@@ -78,6 +78,8 @@ static bool AGSteam_LoadDb();
 static bool AGSteam_SaveDb();
 
 // Script interface declarations
+static int Steam_AddAchievement(const char *steamAchievementID);
+static int Steam_AddStat(const char *steamAchievementID);
 static int AGSteam_IsAchievementAchieved(const char *steamAchievementID);
 static int AGSteam_SetAchievementAchieved(const char *steamAchievementID);
 static int AGSteam_ResetAchievement(const char *steamAchievementID);
@@ -274,12 +276,15 @@ static int AGSteam_New(IAGSEngine *engine) {
 			AGSteam_floatstats.clear();
 			AGSteam_ratestats.clear();
 			AGSteam_engine->RegisterScriptFunction("AGSteam::IsAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_IsAchievementAchieved));
+			AGSteam_engine->RegisterScriptFunction("Steam::IsAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_IsAchievementAchieved));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::SetAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_SetAchievementAchieved));
+			AGSteam_engine->RegisterScriptFunction("Steam::SetAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_SetAchievementAchieved));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::ResetAchievement^1", reinterpret_cast<void *>(AGSteam_ResetAchievement));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::GetIntStat^1", reinterpret_cast<void *>(AGSteam_GetIntStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::GetFloatStat^1", reinterpret_cast<void *>(AGSteam_GetFloatStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::GetAverageRateStat^1", reinterpret_cast<void *>(AGSteam_GetAverageRateStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::SetIntStat^2", reinterpret_cast<void *>(AGSteam_SetIntStat));
+			AGSteam_engine->RegisterScriptFunction("Steam::SetIntStat^2", reinterpret_cast<void *>(AGSteam_SetIntStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::SetFloatStat^2", reinterpret_cast<void *>(AGSteam_SetFloatStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::UpdateAverageRateStat^3", reinterpret_cast<void *>(AGSteam_UpdateAverageRateStat));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::ResetStats^0", reinterpret_cast<void *>(AGSteam_ResetStats));
@@ -296,6 +301,8 @@ static int AGSteam_New(IAGSEngine *engine) {
 			AGSteam_engine->RegisterScriptFunction("AGSteam::get_LeaderboardCount", reinterpret_cast<void *>(AGSteam_LeaderboardCount));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::GetCurrentGameLanguage^0", reinterpret_cast<void *>(AGSteam_GetCurrentGameLanguage));
 			AGSteam_engine->RegisterScriptFunction("AGSteam::GetUserName^0", reinterpret_cast<void *>(AGSteam_GetUserName));
+			AGSteam_engine->RegisterScriptFunction("Steam::AddAchievement^1", reinterpret_cast<void *>(Steam_AddAchievement));
+			AGSteam_engine->RegisterScriptFunction("Steam::AddStat^2", reinterpret_cast<void *>(Steam_AddStat));
 			if (AGSteam_LoadDb()) {
 				AGSteam_Printf(AGSTEAM_MESSAGE_PREFIX "Loaded persistent data\n");
 			}
@@ -321,6 +328,18 @@ static void AGSteam_Delete() {
 
 
 // Script interface
+
+static int Steam_AddAchievement(const char *steamAchievementID) {
+	int ret = 1;
+	debug_printf("AddAchievement(%s): %d\n", steamAchievementID, ret);
+	return ret;
+}
+
+static int Steam_AddStat(const char *steamAchievementID) {
+	int ret = 1;
+	debug_printf("AddStat(%s): %d\n", steamAchievementID, ret);
+	return ret;
+}
 
 static int AGSteam_IsAchievementAchieved(const char *steamAchievementID) {
 	int ret = AGSteam_achievements[steamAchievementID] ? 1 : 0;
